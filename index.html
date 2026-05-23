@@ -2,32 +2,55 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visor de Imagen Puro</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen con Degradados Exactos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; 
+        }
+    </style>
 </head>
-<body class="bg-black m-0 p-0 w-screen h-screen overflow-hidden relative">
+<!-- 
+  El body usa Flexbox en columna (flex-col). 
+  Le ponemos bg-white por si la imagen es muy alta y deja huecos a los lados, 
+  para que se fundan perfectamente con el blanco de los degradados.
+-->
+<body class="flex flex-col items-center justify-center h-screen w-full bg-white">
 
-  <!-- Imagen de fondo a pantalla completa -->
-  <div class="absolute inset-0 z-0">
+    <!-- 
+      HUECO SUPERIOR: 
+      - flex-grow: Ocupará automáticamente todo el espacio libre de arriba.
+      - bg-gradient-to-b from-orange-500 to-white: Empieza naranja arriba y termina en blanco puro exactamente al tocar la imagen.
+    -->
+    <div class="w-full flex-grow min-h-0 bg-gradient-to-b from-orange-500 to-white"></div>
+    
+    <!-- 
+      LA IMAGEN:
+      - Al no tener object-fit global, la caja de la imagen será del tamaño exacto de la foto.
+      - max-w-full y max-h-screen garantizan que crezca hasta los bordes sin desbordarse.
+      - shrink asegura que si no hay espacio, la imagen se achique.
+    -->
     <img 
-      id="mainImage"
-      src="https://www.image2url.com/r2/default/images/1779573143309-dd19e27d-27bb-4251-8a23-be3d5cbc1bba.jpg" 
-      alt="Imagen en pantalla completa" 
-      class="w-full h-full object-cover"
-      onerror="this.src='https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80'"
-    />
-  </div>
+        src="https://www.image2url.com/r2/default/images/1779573143309-dd19e27d-27bb-4251-8a23-be3d5cbc1bba.jpg" 
+        alt="Imagen principal" 
+        class="max-w-full shrink min-h-0 object-contain"
+        style="max-height: 100vh;"
+        onerror="this.src='https://via.placeholder.com/800x600?text=Error+al+cargar+la+imagen'"
+    >
 
-  <!-- Borde Superior: Naranja arriba, Blanco abajo (Al revés del inferior) -->
-  <div class="absolute top-0 left-0 w-full h-14 sm:h-20 bg-gradient-to-b from-orange-500 to-white z-10 opacity-95 pointer-events-none shadow-[0_4px_25px_rgba(249,115,22,0.2)]"></div>
-
-  <!-- Borde Inferior: Blanco arriba, Naranja abajo -->
-  <div class="absolute bottom-0 left-0 w-full h-14 sm:h-20 bg-gradient-to-b from-white to-orange-500 z-10 opacity-95 pointer-events-none shadow-[0_-4px_25px_rgba(249,115,22,0.2)]"></div>
+    <!-- 
+      HUECO INFERIOR: 
+      - flex-grow: Ocupará automáticamente todo el espacio libre de abajo.
+      - bg-gradient-to-t from-orange-500 to-white: Empieza naranja abajo y va "hacia arriba" (to top) terminando en blanco puro exactamente al tocar la imagen.
+    -->
+    <div class="w-full flex-grow min-h-0 bg-gradient-to-t from-orange-500 to-white"></div>
 
 </body>
-</html>```
+</html>
 
 ```
